@@ -56,10 +56,10 @@ function drawIntersection(){
   ctx.beginPath();ctx.moveTo(cx+56,cy-44);ctx.lineTo(cx+56,cy+44);ctx.stroke();
 
   // Traffic lights
-  drawLight(cx-38, cy-82, 'NS', isDark);   // Top, left of center
-  drawLight(cx+22, cy+68, 'NS', isDark);   // Bottom, right of center
-  drawLight(cx-100, cy-78, 'EW', isDark);  // Left, above road with bottom touching
-  drawLight(cx+82, cy+30, 'EW', isDark);   // Right, below road with top touching
+  drawLight(cx-38, cy-85, 'NS', isDark);   // N/S: above intersection, left of divider
+  drawLight(cx+22, cy+70, 'NS', isDark);   // N/S: below intersection, right of divider
+  drawLight(cx-95, cy-24, 'EW', isDark);   // E/W: left, centered in road
+  drawLight(cx+77, cy-24, 'EW', isDark);   // E/W: right, centered in road
 
   // Draw all vehicles in all lanes
   for(const [ln, vehs] of Object.entries(lanes)){
