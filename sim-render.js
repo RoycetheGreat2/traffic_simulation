@@ -98,7 +98,7 @@ function drawIntersection(){
 }
 
 function drawLight(x,y,dir,isDark){
-  ctx.fillStyle=isDark?'#222':'#333';
+  ctx.fillStyle=isDark?'#ffffff':'#333';
   ctx.beginPath(); ctx.roundRect(x,y,18,48,5); ctx.fill();
   const isN=dir==='NS';
   const red=isN?(phase==='EW_GREEN'||phase==='EW_YELLOW'):(phase==='NS_GREEN'||phase==='NS_YELLOW');
