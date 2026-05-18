@@ -98,15 +98,15 @@ function drawIntersection(){
 }
 
 function drawLight(x,y,dir,isDark){
-  ctx.fillStyle=isDark?'#ffffff':'#333';
+  ctx.fillStyle=isDark?'#444':'#333';
   ctx.beginPath(); ctx.roundRect(x,y,18,48,5); ctx.fill();
   const isN=dir==='NS';
   const red=isN?(phase==='EW_GREEN'||phase==='EW_YELLOW'):(phase==='NS_GREEN'||phase==='NS_YELLOW');
   const yel=isN?phase==='NS_YELLOW':phase==='EW_YELLOW';
   const grn=isN?phase==='NS_GREEN':phase==='EW_GREEN';
-  ctx.beginPath();ctx.arc(x+9,y+10,6,0,Math.PI*2);ctx.fillStyle=red?'#ff3333':(isDark?'#3a1a1a':'#6b2222');ctx.fill();
-  ctx.beginPath();ctx.arc(x+9,y+24,6,0,Math.PI*2);ctx.fillStyle=yel?'#fcd34d':(isDark?'#3a2a00':'#6b5000');ctx.fill();
-  ctx.beginPath();ctx.arc(x+9,y+38,6,0,Math.PI*2);ctx.fillStyle=grn?'#22c55e':(isDark?'#0a2a1a':'#1a4a2a');ctx.fill();
+  ctx.beginPath();ctx.arc(x+9,y+10,6,0,Math.PI*2);ctx.fillStyle=red?'#ff3333':(isDark?'#662222':'#6b2222');ctx.fill();
+  ctx.beginPath();ctx.arc(x+9,y+24,6,0,Math.PI*2);ctx.fillStyle=yel?'#fcd34d':(isDark?'#665522':'#6b5000');ctx.fill();
+  ctx.beginPath();ctx.arc(x+9,y+38,6,0,Math.PI*2);ctx.fillStyle=grn?'#22c55e':(isDark?'#226633':'#1a4a2a');ctx.fill();
 }
 
 function drawCar(x,y,rot,color){
