@@ -89,7 +89,7 @@ function drawIntersection(){
   drawLight(cx+77, cy-24, 'EW', isDark);   // E/W: right, centered in road
 
   // Direction labels
-  ctx.fillStyle=isDark?'rgba(255,255,255,0.4)':'rgba(0,0,0,0.35)';
+  ctx.fillStyle='#ffffff';
   ctx.font='11px var(--font-sans)';
   ctx.textAlign='center'; ctx.fillText('N',cx,14); ctx.fillText('S',cx,H-4);
   ctx.textAlign='left'; ctx.fillText('W',4,cy+4);
