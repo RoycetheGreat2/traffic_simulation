@@ -55,12 +55,6 @@ function drawIntersection(){
   ctx.beginPath();ctx.moveTo(cx-56,cy-44);ctx.lineTo(cx-56,cy+44);ctx.stroke();
   ctx.beginPath();ctx.moveTo(cx+56,cy-44);ctx.lineTo(cx+56,cy+44);ctx.stroke();
 
-  // Traffic lights
-  drawLight(cx-38, cy-85, 'NS', isDark);   // N/S: above intersection, left of divider
-  drawLight(cx+22, cy+70, 'NS', isDark);   // N/S: below intersection, right of divider
-  drawLight(cx-95, cy-24, 'EW', isDark);   // E/W: left, centered in road
-  drawLight(cx+77, cy-24, 'EW', isDark);   // E/W: right, centered in road
-
   // Draw all vehicles in all lanes
   for(const [ln, vehs] of Object.entries(lanes)){
     const ld = LANE_DEFS[ln];
@@ -87,6 +81,12 @@ function drawIntersection(){
       ctx.globalAlpha = 1;
     });
   }
+
+  // Traffic lights (drawn over cars)
+  drawLight(cx-38, cy-85, 'NS', isDark);   // N/S: above intersection, left of divider
+  drawLight(cx+22, cy+70, 'NS', isDark);   // N/S: below intersection, right of divider
+  drawLight(cx-95, cy-24, 'EW', isDark);   // E/W: left, centered in road
+  drawLight(cx+77, cy-24, 'EW', isDark);   // E/W: right, centered in road
 
   // Direction labels
   ctx.fillStyle=isDark?'rgba(255,255,255,0.4)':'rgba(0,0,0,0.35)';
