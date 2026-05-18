@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traffic Intersection Simulator</title>
+  <meta name="description" content="Interactive traffic light intersection simulation with real-time metrics, queue analysis, and configurable signal timing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="header-icon"><i class="ti ti-traffic-lights"></i></div>
+        <span class="header-title">Intersection Sim</span>
+        <span class="header-subtitle">CS 324 &middot; Modeling &amp; Simulation</span>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <i id="themeIcon" class="ti ti-sun"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="sim-container">
+    <div class="sim-wrap">
+
+      <!-- Left: Road Panel -->
+      <div class="road-panel">
+        <div class="road-header">
+          <span class="road-title">Intersection simulation</span>
+          <div class="phase-indicator">
+            <span id="ns-badge" class="phase-badge phase-ns-green">N/S green</span>
+            <span id="ew-badge" class="phase-badge phase-red">E/W red</span>
+            <span id="timer-badge" class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-primary)">T: 0s</span>
+          </div>
+        </div>
+        <canvas id="intersection" height="320"></canvas>
+        <div class="log-box" id="logBox">
+          <div class="log-line" style="color:var(--color-text-tertiary)">Simulation ready. Press Start to begin.</div>
+        </div>
+      </div>
+
+      <!-- Right: Controls Panel -->
+      <div class="controls-panel">
+
+        <!-- Scenario -->
+        <div class="card">
+          <div class="card-title">Scenario</div>
+          <div class="scenario-btns">
+            <button class="scenario-btn active" onclick="setScenario('normal',this)">Normal</button>
+            <button class="scenario-btn" onclick="setScenario('rush',this)">Rush hour</button>
+            <button class="scenario-btn" onclick="setScenario('low',this)">Low traffic</button>
+            <button class="scenario-btn" onclick="setScenario('emergency',this)">Emergency</button>
+          </div>
+        </div>
+
+        <!-- Signal Timing -->
+        <div class="card">
+          <div class="card-title">Signal timing</div>
+          <div class="slider-row">
+            <label>Green N/S</label>
+            <input type="range" min="5" max="60" value="30" step="1" id="greenNS" oninput="updateSlider('greenNS','greenNSVal',this.value+'s')">
+            <span class="val" id="greenNSVal">30s</span>
+          </div>
+          <div class="slider-row">
+            <label>Green E/W</label>
+            <input type="range" min="5" max="60" value="25" step="1" id="greenEW" oninput="updateSlider('greenEW','greenEWVal',this.value+'s')">
+            <span class="val" id="greenEWVal">25s</span>
+          </div>
+          <div class="slider-row">
+            <label>Yellow</label>
+            <input type="range" min="2" max="8" value="4" step="1" id="yellowT" oninput="updateSlider('yellowT','yellowTVal',this.value+'s')">
+            <span class="val" id="yellowTVal">4s</span>
+          </div>
+        </div>
+
+        <!-- Traffic Volume -->
+        <div class="card">
+          <div class="card-title">Traffic volume</div>
+          <div class="slider-row">
+            <label>N/S rate</label>
+            <input type="range" min="1" max="20" value="8" step="1" id="rateNS" oninput="updateSlider('rateNS','rateNSVal',this.value+'/min')">
+            <span class="val" id="rateNSVal">8/min</span>
+          </div>
+          <div class="slider-row">
+            <label>E/W rate</label>
+            <input type="range" min="1" max="20" value="6" step="1" id="rateEW" oninput="updateSlider('rateEW','rateEWVal',this.value+'/min')">
+            <span class="val" id="rateEWVal">6/min</span>
+          </div>
+        </div>
+
+        <!-- Live Metrics -->
+        <div class="card">
+          <div class="card-title">Live metrics</div>
+          <div class="metrics-grid">
+            <div class="metric"><div class="metric-label">Avg wait N/S</div><div class="metric-value"><span id="waitNS">0</span><span class="metric-unit">s</span></div></div>
+            <div class="metric"><div class="metric-label">Avg wait E/W</div><div class="metric-value"><span id="waitEW">0</span><span class="metric-unit">s</span></div></div>
+            <div class="metric"><div class="metric-label">Queue N/S</div><div class="metric-value"><span id="queueNS">0</span></div></div>
+            <div class="metric"><div class="metric-label">Queue E/W</div><div class="metric-value"><span id="queueEW">0</span></div></div>
+            <div class="metric"><div class="metric-label">Throughput</div><div class="metric-value"><span id="throughput">0</span><span class="metric-unit">/min</span></div></div>
+            <div class="metric"><div class="metric-label">Sim time</div><div class="metric-value"><span id="simTime">0</span><span class="metric-unit">s</span></div></div>
+          </div>
+        </div>
+
+        <!-- Queue History Chart -->
+        <div class="card">
+          <div class="card-title">Queue history</div>
+          <div class="chart-wrap"><canvas id="qChart" role="img" aria-label="Queue size history for N/S and E/W directions"></canvas></div>
+        </div>
+        <!-- Vehicle Spawn Log -->
+        <div class="card">
+          <div class="card-title">Spawned vehicles</div>
+          <div class="veh-log" id="vehLog">
+            <div class="veh-entry" style="color:var(--color-text-tertiary);justify-content:center">No vehicles yet</div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button class="sim-btn" id="startBtn" onclick="toggleSim()">
+          <i class="ti ti-player-play" aria-hidden="true"></i><span id="startLabel">Start simulation</span>
+        </button>
+        <button class="sim-btn" onclick="resetSim()" style="color:var(--color-text-secondary)">
+          <i class="ti ti-refresh" aria-hidden="true"></i>Reset
+        </button>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script src="sim-core.js"></script>
+  <script src="sim-render.js"></script>
+</body>
+</html>

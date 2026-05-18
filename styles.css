@@ -1,0 +1,476 @@
+/* === Design Tokens === */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  /* Light theme */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f4f5f7;
+  --color-background-info: #eff6ff;
+  --color-background-danger: #fef2f2;
+  --color-border-secondary: #e2e4e9;
+  --color-border-tertiary: #ebedf0;
+  --color-border-info: #bfdbfe;
+  --color-border-danger: #fecaca;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary: #9ca3af;
+  --color-text-info: #2563eb;
+  --color-text-danger: #dc2626;
+  --color-text-warning: #d97706;
+  --color-text-success: #16a34a;
+  --page-bg: #eef1f5;
+  --header-bg: rgba(255, 255, 255, 0.72);
+  --header-border: rgba(0, 0, 0, 0.06);
+  --glow-1: rgba(99, 102, 241, 0.08);
+  --glow-2: rgba(16, 185, 129, 0.06);
+}
+
+[data-theme="dark"] {
+  --color-background-primary: #18181b;
+  --color-background-secondary: #27272a;
+  --color-background-info: #1e2a3a;
+  --color-background-danger: #2a1a1a;
+  --color-border-secondary: #3f3f46;
+  --color-border-tertiary: #303036;
+  --color-border-info: #1e40af;
+  --color-border-danger: #991b1b;
+  --color-text-primary: #f4f4f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-tertiary: #71717a;
+  --color-text-info: #60a5fa;
+  --color-text-danger: #f87171;
+  --color-text-warning: #fbbf24;
+  --color-text-success: #4ade80;
+  --page-bg: #0f0f12;
+  --header-bg: rgba(24, 24, 27, 0.78);
+  --header-border: rgba(255, 255, 255, 0.06);
+  --glow-1: rgba(99, 102, 241, 0.04);
+  --glow-2: rgba(16, 185, 129, 0.03);
+}
+
+/* === Reset & Base === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--page-bg);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  transition: background .3s, color .3s;
+}
+
+/* === Header === */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  padding: 0 1.5rem;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6366f1, #10b981);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+}
+
+.header-title {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.header-subtitle {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  margin-left: 2px;
+}
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all .15s;
+}
+
+.theme-toggle:hover {
+  background: var(--color-background-secondary);
+}
+
+/* === Layout === */
+.sim-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.sim-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+  gap: 16px;
+  padding: 1rem 0 2rem;
+}
+
+@media (max-width: 860px) {
+  .sim-wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* === Road Panel === */
+.road-panel {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-lg);
+  border: 0.5px solid var(--color-border-tertiary);
+  padding: 16px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.road-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.road-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+/* === Controls Panel === */
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* === Card === */
+.card {
+  background: var(--color-background-primary);
+  border-radius: var(--border-radius-lg);
+  border: 0.5px solid var(--color-border-tertiary);
+  padding: 14px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* === Metrics === */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.metric {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 12px;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  margin-bottom: 3px;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.metric-unit {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-left: 2px;
+}
+
+/* === Sliders === */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.slider-row:last-child {
+  margin-bottom: 0;
+}
+
+.slider-row label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.slider-row input[type=range] {
+  flex: 1;
+  accent-color: #6366f1;
+  height: 6px;
+}
+
+.slider-row .val {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 42px;
+  text-align: right;
+  color: var(--color-text-primary);
+}
+
+/* === Scenario Buttons === */
+.scenario-btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.scenario-btn {
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+}
+
+.scenario-btn:hover {
+  background: var(--color-background-secondary);
+}
+
+.scenario-btn.active {
+  background: var(--color-background-info);
+  color: var(--color-text-info);
+  border-color: var(--color-border-info);
+}
+
+/* === Sim Buttons === */
+.sim-btn {
+  width: 100%;
+  padding: 9px;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sim-btn:hover {
+  background: var(--color-background-secondary);
+}
+
+.sim-btn.running {
+  background: var(--color-background-danger);
+  color: var(--color-text-danger);
+  border-color: var(--color-border-danger);
+}
+
+/* === Canvas === */
+canvas#intersection {
+  width: 100%;
+  border-radius: var(--border-radius-md);
+}
+
+/* === Log Box === */
+.log-box {
+  background: var(--color-background-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 10px 12px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  height: 100px;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+}
+
+.log-box::-webkit-scrollbar {
+  width: 4px;
+}
+
+.log-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.log-box::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border-radius: 4px;
+}
+
+.log-line {
+  padding: 1px 0;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  line-height: 1.5;
+}
+
+/* === Phase Badges === */
+.phase-indicator {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.phase-badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: var(--border-radius-md);
+  font-weight: 500;
+}
+
+.phase-ns-green {
+  background: #1a4a1a;
+  color: #5eda5e;
+}
+
+.phase-ns-yellow {
+  background: #4a3a00;
+  color: #fcd34d;
+}
+
+.phase-ew-green {
+  background: #1a3a4a;
+  color: #5eb8da;
+}
+
+.phase-ew-yellow {
+  background: #4a2a00;
+  color: #f97316;
+}
+
+.phase-red {
+  background: #3a1a1a;
+  color: #f87171;
+}
+
+/* === Chart === */
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 120px;
+}
+
+/* === Vehicle Spawn Log === */
+.veh-log {
+  max-height: 160px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.veh-log::-webkit-scrollbar {
+  width: 4px;
+}
+
+.veh-log::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.veh-log::-webkit-scrollbar-thumb {
+  background: var(--color-border-secondary);
+  border-radius: 4px;
+}
+
+.veh-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--color-background-secondary);
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.veh-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.veh-dir {
+  font-weight: 500;
+  color: var(--color-text-primary);
+  min-width: 36px;
+}
+
+.veh-id {
+  color: var(--color-text-tertiary);
+}
+
+.veh-time {
+  margin-left: auto;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
