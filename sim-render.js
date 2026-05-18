@@ -58,8 +58,8 @@ function drawIntersection(){
   // Traffic lights
   drawLight(cx-38, cy-82, 'NS', isDark);   // Top, left of center
   drawLight(cx+22, cy+68, 'NS', isDark);   // Bottom, right of center
-  drawLight(cx-110, cy-28, 'EW', isDark);  // Left side
-  drawLight(cx+85, cy+8, 'EW', isDark);    // Right side
+  drawLight(cx-100, cy-78, 'EW', isDark);  // Left, above road with bottom touching
+  drawLight(cx+82, cy+30, 'EW', isDark);   // Right, below road with top touching
 
   // Draw all vehicles in all lanes
   for(const [ln, vehs] of Object.entries(lanes)){
