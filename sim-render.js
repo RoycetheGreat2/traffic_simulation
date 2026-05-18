@@ -55,11 +55,11 @@ function drawIntersection(){
   ctx.beginPath();ctx.moveTo(cx-56,cy-44);ctx.lineTo(cx-56,cy+44);ctx.stroke();
   ctx.beginPath();ctx.moveTo(cx+56,cy-44);ctx.lineTo(cx+56,cy+44);ctx.stroke();
 
-  // Traffic lights (at intersection corners, off-road)
-  drawLight(cx-76, cy-95, 'NS', isDark);  // NW corner
-  drawLight(cx+60, cy+50, 'NS', isDark);  // SE corner
-  drawLight(cx+60, cy-95, 'EW', isDark);  // NE corner
-  drawLight(cx-76, cy+50, 'EW', isDark);  // SW corner
+  // Traffic lights (at intersection corners, slightly touching road)
+  drawLight(cx-68, cy-88, 'NS', isDark);  // NW corner
+  drawLight(cx+50, cy+40, 'NS', isDark);  // SE corner
+  drawLight(cx+50, cy-88, 'EW', isDark);  // NE corner
+  drawLight(cx-68, cy+40, 'EW', isDark);  // SW corner
 
   // Draw all vehicles in all lanes
   for(const [ln, vehs] of Object.entries(lanes)){
